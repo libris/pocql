@@ -1,0 +1,38 @@
+?start: or_expr "."?
+
+or_expr: and_expr (("OR"i | "UNION"i) and_expr)*
+and_expr: expr (("AND"i | ";") expr)*
+expr: group | fact | not_fact | some_fact
+group: "(" or_expr ")"
+fact: predicate compound_object
+not_fact: ("NOT"i | "!") ((predicate unary_object) | unary_object)
+some_fact: TERM | STRING
+predicate: TERM
+compound_object: unary_object | object_group
+unary_object: negated_object | operator_object | TERM | STRING
+operator_object: operator compound_object
+operator: GTE | LTE | NEQ | GT | LT | EQ | LIKE
+object_group: "(" (object_and_group | object_or_group) ")"
+object_and_group: unary_object (("AND"i | ",") (object_and_group | unary_object))
+object_or_group: unary_object (("OR"i | "|") (object_or_group | unary_object))
+negated_object: ("NOT"i | "!") unary_object
+
+GTE: ">="
+LTE: "<="
+NEQ: "!="
+GT: ">"
+LT: "<"
+EQ: "="
+LIKE: "~"
+
+TERM: (/[A-Za-z0-9:_.\/|?^-]/)+
+
+STRING: "\"" (ESC | SAFECODEPOINT)* "\""
+ESC: "\\" (/["\\\/bfnrt]/ | UNICODE)
+UNICODE: "u" HEX HEX HEX HEX
+HEX: /[0-9a-fA-F]/
+SAFECODEPOINT: /[^"\\\u0000-\u001F]/
+
+WS: "\u0020" | "\u0009" | "\u000A" | "\u000D"
+
+%ignore WS

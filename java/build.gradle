@@ -1,0 +1,25 @@
+plugins {
+    id 'application'
+}
+
+apply plugin : 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.antlr:antlr4-runtime:4.11.1'
+}
+
+jar {
+    archiveBaseName = 'pocql'
+}
+
+application {
+    mainClass = 'pocql.Main'
+}
+
+run {
+    standardInput = System.in
+}
