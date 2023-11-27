@@ -25,13 +25,13 @@ LT: "<"
 EQ: "="
 LIKE: "~"
 
-TERM: (/[A-Za-z0-9:_.\/|?^-]/)+
+TERM: (/[^"'();, \n\r\t]/)+
 
 STRING: "\"" (ESC | SAFECODEPOINT)* "\""
 ESC: "\\" (/["\\\/bfnrt]/ | UNICODE)
 UNICODE: "u" HEX HEX HEX HEX
 HEX: /[0-9a-fA-F]/
-SAFECODEPOINT: /[^"\\\u0000-\u001F]/
+SAFECODEPOINT: /[^"\\\n\r]/
 
 WS: "\u0020" | "\u0009" | "\u000A" | "\u000D"
 
