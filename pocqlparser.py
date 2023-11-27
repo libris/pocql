@@ -19,7 +19,8 @@ class PocqlAST(Transformer):
     def expr(self, v):
         return v[0]
     def fact(self, v):
-        return {"poc:path": self._path(v[0]), "poc:object": v[1:]}
+        assert len(v) < 3
+        return {"poc:path": self._path(v[0]), "poc:object": v[1]}
         return o
     def some_fact(self, v):
         return {"poc:object": v[0]}
