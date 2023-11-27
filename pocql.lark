@@ -12,9 +12,10 @@ compound_object: unary_object | object_group
 unary_object: negated_object | operator_object | TERM | STRING
 operator_object: operator compound_object
 operator: GTE | LTE | NEQ | GT | LT | EQ | LIKE
-object_group: "(" (object_and_group | object_or_group) ")"
+object_group: "(" (object_and_group | object_or_group | objects | unary_object) ")"
 object_and_group: unary_object (("AND"i | ",") (object_and_group | unary_object))
 object_or_group: unary_object (("OR"i | "|") (object_or_group | unary_object))
+objects: unary_object (objects | unary_object)
 negated_object: ("NOT"i | "!") unary_object
 
 GTE: ">="

@@ -44,6 +44,10 @@ class PocqlAST(Transformer):
         return _reduce("poc:and", v)
     def object_or_group(self, v):
         return {"poc:or": v}
+    def objects(self, v):
+        if isinstance(v[1], list):
+            v += v.pop(1)
+        return v
     def negated_object(self, v):
         return {"poc:not": v}
     def STRING(self, v):

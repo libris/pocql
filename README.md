@@ -34,6 +34,14 @@ Terse grouping:
 
     a Electronic; genreForm (lcsh:Physics | lcsh:Cosmology); author "Some Body"
 
+Compact form 1:
+
+    author:(a b c)
+
+Compact form 2:
+
+    FÖRF:("Ekelöf, Gunnar" trl); ÄMNE:(översättare); ÄMNE:(biografi)
+
 More complex:
 
     type (Electronic AND NOT Print)
