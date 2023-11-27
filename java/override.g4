@@ -1,3 +1,5 @@
+TERM: (~["'();, \n\r\t])+ ;
+
 STRING: '"' (ESC | SAFECODEPOINT)* '"' ;
 fragment ESC: '\\' (["\\/bfnrt] | UNICODE) ;
 fragment UNICODE: 'u' HEX HEX HEX HEX ;
