@@ -20,19 +20,19 @@ Queries are representable as RDF (e.g. in Turtle or JSON-LD).
 
 Combinations:
 
-    Electronic AND genreForm lcsh:Physics AND genreForm lcsh:Cosmology AND author "Some Body"
+    Electronic AND subject lcsh:Physics AND subject lcsh:Cosmology AND author "Some Body"
 
 Same combinations in terse (Turtle-like) form:
 
-    a Electronic; genreForm (lcsh:Physics, lcsh:Cosmology); author "Some Body"
+    a Electronic; subject (lcsh:Physics, lcsh:Cosmology); author "Some Body"
 
 Grouping:
 
-    a Electronic AND (genreForm lcsh:Physics OR genreForm lcsh:Cosmology) AND author "Some Body"
+    a Electronic AND (subject lcsh:Physics OR subject lcsh:Cosmology) AND author "Some Body"
 
 Terse grouping:
 
-    a Electronic; genreForm (lcsh:Physics | lcsh:Cosmology); author "Some Body"
+    a Electronic; subject (lcsh:Physics | lcsh:Cosmology); author "Some Body"
 
 Compact form 1:
 
@@ -45,7 +45,7 @@ Compact form 2:
 More complex:
 
     type (Electronic AND NOT Print)
-        AND genreForm (lcsh:Physics OR lcsh:Cosmology)
+        AND subject (lcsh:Physics OR lcsh:Cosmology)
         AND (author "Some Body" OR creator "Some \"Any\" Body")
         AND ((produced AND NOT published 2023) OR published NOT 2023)
         AND isbn NOT 0-000-111-000-0
@@ -54,7 +54,7 @@ More complex:
 Complex containing predicate paths:
 
     type (Instance AND Electronic AND NOT Print)
-        AND instanceOf?/genreForm (lcsh:Physics OR lcsh:Cosmology)
+        AND instanceOf?/subject (lcsh:Physics OR lcsh:Cosmology)
         AND (author|creator "Some Body" OR responsibilityStatement "Some \"Any\" Body")
         AND ((produced AND NOT published 2023) OR published NOT 2023)
         AND isbn NOT 0-000-111-000-0
@@ -63,7 +63,7 @@ Complex containing predicate paths:
 Complex example in terse (Turtle/SPARQL-like) form:
 
     a (Instance, Electronic, !Print);
-        instanceOf?/genreForm (lcsh:Physics | lcsh:Cosmology);
+        instanceOf?/subject (lcsh:Physics | lcsh:Cosmology);
         (author|creator "Some Body" UNION responsibilityStatement "Some \"Any\" Body");
         ((produced; !published 2023) UNION published !2023);
         isbn !0-000-111-000-0;
@@ -107,11 +107,11 @@ POCQL is a partial superset of CQL.
 The last query in the example section above *should* be equivalent to this SPARQL:
 
     ?s a :Instance, :Electronic ;
-        :instanceOf?/:genreForm ?genreForm ;
+        :instanceOf?/:subject ?subject ;
         :isbn ?isbn;
         ^:itemOf/:heldBy lib:S .
     FILTER NOT EXISTS { ?s a :Print }
-    FILTER(?genreForm IN (lcsh:Physics, lcsh:Cosmology))
+    FILTER(?subject IN (lcsh:Physics, lcsh:Cosmology))
     FILTER(?isbn != '0-000-111-000-0')
     FILTER EXISTS {
         { ?s :author|:creator "Some Body" } UNION { ?s :responsibilityStatement "Some \"Any\" Body" }
